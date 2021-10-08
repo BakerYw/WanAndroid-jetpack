@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+apply from: "../basic.gradle"
+apply plugin: 'kotlin-android'
+
+android {
+
+    defaultConfig {
+        applicationId Version.applicationId
+        versionCode Version.versionCode
+        versionName Version.versionName
+        testInstrumentationRunner Version.testInstrumentationRunner
+    }
+
+    // 封装项目的所有构建类型配置
+    buildTypes {
+        debug {
+            // Log 控制器 - 输出日志
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            // 对调试 build 停用 Crashlytics
+            ext.enableCrashlytics = false
+            // 禁止自动生成 build ID
+            ext.alwaysUpdateBuildId = false
+            // 关闭资源缩减
+            shrinkResources false
+            // 关闭代码缩减
+            minifyEnabled false
+            // 关闭 zipAlign 优化
+            zipAlignEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            // Log 控制器 - 禁止输出日志
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            // 启用资源缩减
+            shrinkResources true
+            // 启动代码缩减
+            minifyEnabled true
+            // 开启 zipAlign 优化
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation project(path: ':libBase')
+    implementation project(path: ':hotFix')
+    implementation project(path: ':libThird')
+    implementation project(path: ':uiKit')
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+}

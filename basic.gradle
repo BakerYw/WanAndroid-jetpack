@@ -1,0 +1,50 @@
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdk Version.compileSdk
+
+    defaultConfig {
+        minSdk Version.minSdk
+        targetSdk Version.targetSdk
+        // 仅保留中文资源
+        resConfigs "zh"
+        // 启用多 dex 文件
+        multiDexEnabled true
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters "armeabi", "x86"
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+    dataBinding {
+        //noinspection DataBindingWithoutKapt
+        enabled = true
+    }
+    lintOptions {
+        // lint 异常后继续执行
+        abortOnError false
+    }
+}
+
+/**
+ * implementation：不会向下传递，仅在当前 module 生效； api：向下传递，所依赖的 module 均可使用
+ */
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Kotlin.stdlibJdk8
+    implementation AndroidX.appcompat
+    implementation AndroidX.coreKtx
+    implementation AndroidX.material
+    testImplementation AndroidX.junit
+    implementation AndroidX.swiperefreshlayout
+    implementation AndroidX.recyclerView
+    androidTestImplementation AndroidX.androidJunit
+    androidTestImplementation AndroidX.espresso
+}

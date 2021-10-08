@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="1000">
+
+        <OnSwipe
+            motion:dragDirection="dragEnd"
+            motion:touchRegionId="@+id/box" />
+        <KeyFrameSet >
+<!--            <KeyPosition-->
+<!--                motion:motionTarget="@+id/box"-->
+<!--                motion:framePosition="20"-->
+<!--                motion:keyPositionType="parentRelative"-->
+<!--                motion:percentX="0.3"-->
+<!--                motion:percentY="0.8" />-->
+<!--            <KeyPosition-->
+<!--                motion:framePosition="50"-->
+<!--                motion:motionTarget="@id/box"-->
+<!--                motion:keyPositionType="deltaRelative"-->
+<!--                motion:percentY="0.5"-->
+<!--                motion:percentX="0.8" />-->
+<!--            <KeyAttribute-->
+<!--                motion:framePosition="50"-->
+<!--                motion:motionTarget="@id/box"-->
+<!--                android:rotationY="180"-->
+<!--                android:alpha="0"-->
+<!--                />-->
+<!--            <KeyAttribute-->
+<!--                android:rotationY="180"-->
+<!--                motion:framePosition="50"-->
+<!--                motion:motionTarget="@id/box">-->
+<!--                <CustomAttribute-->
+<!--                    motion:attributeName="rectangleColor"-->
+<!--                    motion:customColorValue="@color/colorAccent" />-->
+<!--            </KeyAttribute>-->
+            <KeyCycle
+                motion:framePosition="80"
+                motion:motionTarget="@+id/box"
+                motion:wavePeriod="1"
+                motion:waveShape="sin"
+                android:translationY="50dp"/>
+            <!--在上面给KeyPosition 添加了几个属性
+            motion:framePosition表示动画的进度，取值范围为[0,100]。上面写的50就表示动画进度执行50%的地方。
+            motion:motionTarget表示修改路径的视图id
+            motion:keyPositionType 表示坐标系类型，取值可以是parentRelative、pathRelative、deltaRelative
+            motion:percentY 和 motion:percentX 就是相对参考系的纵向和横向的比例。-->
+        </KeyFrameSet>
+        <!--        <OnClick-->
+<!--            motion:targetId="@+id/box"-->
+<!--            motion:clickAction="transitionToEnd"/>-->
+    </Transition>
+
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/box"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:alpha="1"
+            android:rotationX="0"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/box"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:alpha="0.1"
+            android:rotationX="360"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"/>
+    </ConstraintSet>
+</MotionScene>
